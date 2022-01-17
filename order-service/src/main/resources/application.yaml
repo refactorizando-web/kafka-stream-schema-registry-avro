@@ -1,0 +1,35 @@
+spring.output.ansi.enabled: ALWAYS
+
+logging.pattern.console: "%clr(%d{HH:mm:ss.SSS}){blue} %clr(---){faint} %clr([%15.15t]){yellow} %clr(:){red} %clr(%m){faint}%n"
+
+server.port: 8087
+spring:
+  application:
+    name: order-car
+  cloud:
+    schema:
+      avro:
+        dynamicSchemaGenerationEnabled: true
+    stream:
+      default:
+        contentType: application/*+avro
+        consumer:
+          useNativeDecoding: true
+        producer:
+          useNativeEncoding: true
+      function:
+        definition: order;
+      bindings:
+        order-out-0.destination: order
+      kafka:
+        bootstrap-servers: localhost:9092
+        default:
+          producer:
+            configuration:
+              key.serializer: org.apache.kafka.common.serialization.StringSerializer
+              value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+              retry.backoff.ms: 100
+              schema.registry.url: http://localhost:8081
+              max.in.flight.requests.per.connection: 1
+        binder:
+          requiredAcks: all

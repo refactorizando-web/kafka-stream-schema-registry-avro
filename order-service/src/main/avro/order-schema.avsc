@@ -1,0 +1,50 @@
+
+  {
+      "type": "record",
+      "name": "Order",
+      "namespace": "com.refactorizando.example.schemaregistry.producer.message.avro",
+      "fields": [
+      {
+          "name": "id",
+          "type": "string"
+      },
+      {
+          "name": "customerId",
+          "type": "string"
+      },
+      {
+          "name": "car",
+          "type":[
+                      {
+                         "type":"record",
+                         "name":"Car",
+                         "fields":[
+                            {
+                               "name":"id",
+                               "type":"string"
+                            },
+                            {
+                               "name":"model",
+                               "type":"string"
+                            },
+                            {
+                               "name":"brand",
+                               "type":"string"
+                            },
+                            {
+                               "name":"color",
+                               "type":"string"
+                            }
+                         ]
+                      }
+                      ]
+      },
+      {
+           "name": "orderDate",
+           "type": {
+              "type": "int",
+              "logicalType": "date"
+           }
+      }
+      ]
+  }

@@ -1,0 +1,36 @@
+= Schema Registry with  Kafka Stream and Avro using Spring Cloud Stream =
+
+== Introduction
+
+This spring boot application use Schema Registry to store Schemas from
+Avro and Kafka Stream to send and receive events.
+
+This project has two modules, the first one Order-Service send a message with a
+new Order. And the second one management service, receive an event sent from Order Service
+
+If you want more information you can take a look in this article:
+https://refactorizando.com/schema-registry-kafka-stream-avro-spring-boot
+
+== Set Up
+
+Before run the project you need run a docker compose with Kafka and Schema Registry.
+You can find the docker compose in the docker folder of both projects.
+
+    docker-compose up -d
+
+
+
+== How does it work?
+
+To run it you need to go inside every project and make a maven install to generate
+the object from the avro file.
+
+        mvn clean install -u
+
+then you can run every project using from different terminals to check the events:
+
+        mvn spring-boot:run
+
+
+
+

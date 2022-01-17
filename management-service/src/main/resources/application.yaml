@@ -1,0 +1,43 @@
+
+
+server.port: 8088
+
+spring.output.ansi.enabled: ALWAYS
+
+logging.pattern.console: "%clr(%d{HH:mm:ss.SSS}){blue} %clr(---){faint} %clr([%15.15t]){yellow} %clr(:){red} %clr(%m){faint}%n"
+
+
+spring:
+  application:
+    name: service-management
+  cloud:
+    schema:
+      avro:
+        dynamicSchemaGenerationEnabled: true
+    stream:
+      default:
+        contentType: application/*+avro
+        consumer:
+          useNativeDecoding: true
+      function:
+        definition: orders
+      bindings:
+        orders-in-0:
+          contentType: application/*+avro
+          destination: order
+        input:
+          content-type: avro/bytes
+      kafka:
+        bootstrap-servers: localhost:9092
+        default:
+          requiredAcks: all
+          consumer:
+              configuration:
+                key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                schema.registry.url: http://localhost:8081
+                specific.avro.reader: true
+                value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+
+
+
